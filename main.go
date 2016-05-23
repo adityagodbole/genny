@@ -35,7 +35,7 @@ func main() {
 		in      = flag.String("in", "", "file to parse instead of stdin")
 		out     = flag.String("out", "", "file to save output to instead of stdout")
 		pkgName = flag.String("pkg", "", "package name for generated files")
-		prefix  = "https://github.com/metabition/gennylib/raw/master/"
+		source  = flag.String("src", "metabition/gennylib", "github repository for files to get")
 	)
 	flag.Parse()
 	args := flag.Args()
@@ -78,6 +78,7 @@ func main() {
 			usage()
 			os.Exit(exitcodeInvalidArgs)
 		}
+		prefix := fmt.Sprintf("https://github.com/%s/raw/master/", *source)
 		r, err := http.Get(prefix + args[1])
 		if err != nil {
 			fatal(exitcodeGetFailed, err)
